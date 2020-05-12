@@ -33,7 +33,7 @@ class TestFlask(unittest.TestCase):
             'pos': 0, 'status': 'Q0', 'steps': 1
         }, follow_redirects=True)
         assert response.status_code == 200
-        
+
         data = response.data.decode('utf-8')
         assert 'value="_1"' in data      # alphabet
         assert 'value="Q0 Qt"' in data   # status_alphabet

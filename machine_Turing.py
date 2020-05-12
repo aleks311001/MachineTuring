@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import json
 import re
 
+
 @dataclass
 class Cell:
     input_text: str = ''

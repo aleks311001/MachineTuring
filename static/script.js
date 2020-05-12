@@ -127,7 +127,9 @@ function makeNextStep(moves, change_symbols, executed, statuses, index) {
     pos_input.setAttribute('value', (middle + parseInt(index_ribbon.cells[0].innerHTML)).toString());
     makeMiddleMainIndex();
 
-    timerMakeNextStepId = setTimeout(function () {makeNextStep(moves, change_symbols, executed, statuses, index + 1);}, 250);
+    timerMakeNextStepId = setTimeout(function () {
+        makeNextStep(moves, change_symbols, executed, statuses, index + 1);
+        }, 250);
 }
 
 function drawAfterLoad() {
@@ -173,7 +175,8 @@ function drawRibbon(ribbon_data, ribbon_extremum) {
     }
 }
 function drawBorrow() {
-    document.getElementById("borrow").style.marginLeft = (middle * widthCell - widthCell * 0.4).toString() + 'px';
+    document.getElementById("borrow").style.marginLeft =
+        (middle * widthCell - widthCell * 0.4).toString() + 'px';
     document.getElementById("borrow").style.marginTop = '-70px';
     document.getElementById("borrow").style.color = 'red';
 }
