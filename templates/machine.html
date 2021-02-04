@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Machine Turing</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='MT.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='MT.ico') }}">
+ </head>
+    <body>
+        <div style="font-size: 60px; text-align: center">Turing machine</div>
+
+        <form action="/" method="post">
+            <div class="part-names">Alphabet:
+                <label>
+                    <input name="alphabet" class="input input-alphabet" autocomplete="off"
+                           value="{{ alphabet }}" required>
+                </label>
+            </div>
+
+            <div class="part-names">
+                Status alphabet:
+                <label>
+                    <input name="status_alphabet" class="input input-alphabet" autocomplete="off"
+                           value="{{ status_alphabet }}" required>
+                </label>
+                <button class="button button-alphabet" type="submit" formaction="/update"> Update </button>
+            </div>
+
+            <div class="part-names"> Machine's ribbon:
+            <div id="borrow" style="font-size: 60px"> &#11015; </div>
+                <table id="ribbon_machine" class="table" data-ribbon="{{ ribbon_cells }}"
+                       data-ribbon_extremum="{{ ribbon_extremum }}">
+                    <tr class="ribbon-line"> </tr>
+                    <tr class="index-ribbon-line"> </tr>
+                </table>
+            </div>
+
+            <div class="part-names">
+                Now status:
+                <label>
+                    <input id="status" class="input input-status" name="status" autocomplete="off"
+                           data-statuses="{{ statuses }}" data-pos="{{ pos_start }}"
+                           data-moves="{{ moves }}" data-change_symbols="{{ change_symbols }}" required>,
+                </label>
+                pos:
+                <label for="pos">
+                    <input id="pos" name="pos" class="input input-status" autocomplete="off">
+                </label>
+            </div>
+
+            <div class="part-names">
+                Machine's program:
+                <button formaction="/start" class="button button-start" id="start_button" type="submit"> Start </button>
+                on
+                <label>
+                    <input name="steps" class="input input-steps" autocomplete="off" value="250" required
+                           placeholder="max">
+                </label>
+                steps or
+                <button formaction="/next_step" class="button button-start" type="submit"> Next step </button>
+                <button onclick="stopMakeNextStep();" class="button button-start" type="button"> Stop </button>
+            </div>
+
+            <table id="program_machine" class="table program-table">
+                <tr class="program-line-status">
+                    <td class="cell program-cell program-cell-symbol"> </td>
+                    {% for cell in program_table['line_status'] %}
+                        <td class="cell program-cell program-cell-status"> {{ cell }} </td>
+                    {% endfor %}
+                </tr>
+                {% for ind_line in program_table['index_lines'] %}
+                    <tr class="program-line">
+                        <td class="cell program-cell program-cell-symbol">
+                            {{ program_table['lines'][ind_line]['symbol'] }}
+                        </td>
+                        {% for ind_cell in program_table['lines'][ind_line]['index_cells'] %}
+                            <td class="cell program-cell">
+                                <label>
+                                    <input name="input~{{ ind_line }}~{{ ind_cell }}" class="input input-program"
+                                           autocomplete="off"
+                                           value="{{ program_table['lines'][ind_line]['cells'][ind_cell] }}">
+                                </label>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+
+            <div class="part-names">
+                Name:
+                <label>
+                    <input name="save-load" class="input input-alphabet" placeholder="machine name">
+                </label>
+                <button class="button button-save-load" formaction="/load" type="submit">Load</button>
+                <button class="button button-save-load" formaction="/save" type="submit">Save</button>
+            </div>
+            <h2>Example machines: print1, add1, while_add1</h2>
+        </form>
+
+        <form action="/clear" method="post" class="part-names">
+            <button formaction="/clear" class="button button-start" type="submit"> Clear </button>
+        </form>
+
+        <script type="text/javascript" src="{{ url_for('static',filename='script.js') }}"></script>
+    </body>
+</html>
